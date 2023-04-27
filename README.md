@@ -1,1 +1,1 @@
-# terraform-aws-mrdir
+# terraform-azuread-mrmgr
