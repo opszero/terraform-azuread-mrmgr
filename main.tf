@@ -1,6 +1,5 @@
 data "azuread_client_config" "current" {}
 
-
 resource "azuread_application" "main" {
   display_name     = var.service_principal_name
   owners           = [data.azuread_client_config.current.object_id]
@@ -13,7 +12,6 @@ resource "azuread_service_principal" "main" {
   alternative_names = var.alternative_names
 }
 
-
 provider "azurerm" {
   alias = "azurerm"
   features {}
@@ -23,9 +21,8 @@ data "azurerm_subscription" "current" {
   provider = azurerm.azurerm
 }
 
-
 resource "azurerm_role_assignment" "main" {
-  provider = azurerm.azurerm
+  provider             = azurerm.azurerm
   scope                = "/subscriptions/${data.azurerm_subscription.current.subscription_id}"
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.main.object_id
@@ -41,5 +38,3 @@ resource "azuread_application_federated_identity_credential" "github" {
   issuer                = "https://token.actions.githubusercontent.com"
   subject               = "repo:${each.value.repos}:${each.value.entity_type}"
 }
-
-
