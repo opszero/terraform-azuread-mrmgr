@@ -15,20 +15,20 @@ terraform {
 provider "azuread" {}
 
 module "openid" {
-  source                 = "./.."
-  service_principal_name = "test"
+  source = "./.."
   github = {
+    app = {
+      sign_in_audience  = "AzureADMyOrg"
+      alternative_names = []
+      repos             = "opszero/app"
+      entity_type       = "pull_request" # for branch ref:refs/heads/<branch name>
+    },
     api = {
-      repos       = "opszero/testrepo"
-      entity_type = "pull_request" # for branch ref:refs/heads/<branch name>
+      sign_in_audience  = "AzureADMyOrg"
+      alternative_names = []
+      repos             = "opszero/api"
+      entity_type       = "pull_request" # for branch ref:refs/heads/<branch name>
     }
   }
 }
 
-output "clientid" {
-  value = module.openid.clientid
-}
-
-output "app_id" {
-  value = module.openid.app_id
-}

@@ -1,7 +1,7 @@
-output "clientid" {
-  value = azuread_service_principal.main.id
+output "client_id" {
+  value = { for k, v in azuread_service_principal.main : k => v.id }
 }
 
 output "app_id" {
-  value = azuread_service_principal.main.application_id
+  value = { for k, v in azuread_service_principal.main : k => v.application_id }
 }
