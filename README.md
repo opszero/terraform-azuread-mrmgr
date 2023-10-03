@@ -6,20 +6,21 @@
 
 
 ```
-  github = {
-    app = {
-      sign_in_audience  = "AzureADMyOrg"
-      alternative_names = []
-      repos             = "opszero/app"
-      entity_type       = "pull_request" # for branch ref:refs/heads/<branch name>
-    },
-    api = {
-      sign_in_audience  = "AzureADMyOrg"
-      alternative_names = []
-      repos             = "opszero/api"
-      entity_type       = "pull_request" # for branch ref:refs/heads/<branch name>
+    module "openid" {
+      source = "./.."
+      github = true
+      sp_name = "testing-sp-name"
+      repos  = {
+        app = {
+          repo        = "opszero/app"
+          entity_type = "pull_request" # for branch ref:refs/heads/<branch name>
+        }
+        api = {
+          repo        = "opszero/api"
+          entity_type = "pull_request" # for branch ref:refs/heads/<branch name>
+        }
+      }
     }
-  }
 ```
 
 #### Need to allow access `service principal` to `Kubernetes`
